@@ -27,6 +27,17 @@ export default class ShortcutWidget extends Widget {
 		this.widget.click(() => {
 			if (this.in_customize_mode) return;
 
+			if (this.type === "External Links") {
+
+				frappe.warn('Redirection',
+    				'You are about to be redirected to Enlistment page for better experience on class enlisting',
+   						 () => {
+								location.assign(`${location.origin}/${this.link_to}`);
+								return;
+							},
+							'Continue'
+						)
+			}
 			let route = frappe.utils.generate_route({
 				route: this.route,
 				name: this.link_to,
