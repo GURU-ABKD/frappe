@@ -197,6 +197,9 @@ class LoginManager:
 		if not resume:
 			frappe.response["full_name"] = self.full_name
 
+			from frappe.jwt_helper import jwt_encoder
+			frappe.response["token"] = jwt_encoder(self.user)
+
 		# redirect information
 		redirect_to = frappe.cache().hget("redirect_after_login", self.user)
 		if redirect_to:

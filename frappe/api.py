@@ -12,7 +12,7 @@ import frappe.handler
 from frappe import _
 from frappe.utils.data import sbool
 from frappe.utils.response import build_response
-
+from frappe.jwt_helper import validate_jwt_token
 
 def handle():
 	"""
@@ -167,7 +167,7 @@ def validate_auth():
 	authorization_header = frappe.get_request_header("Authorization", str()).split(" ")
 
 	if len(authorization_header) == 2:
-		validate_oauth(authorization_header)
+		# validate_oauth(authorization_header)
 		validate_auth_via_api_keys(authorization_header)
 
 	validate_auth_via_hooks()
@@ -223,12 +223,23 @@ def validate_auth_via_api_keys(authorization_header):
 	try:
 		auth_type, auth_token = authorization_header
 		authorization_source = frappe.get_request_header("Frappe-Authorization-Source")
-		if auth_type.lower() == "basic":
-			api_key, api_secret = frappe.safe_decode(base64.b64decode(auth_token)).split(":")
+		# if auth_type.lower() == "basic":
+		# 	api_key, api_secret = frappe.safe_decode(base64.b64decode(auth_token)).split(":")
+		# 	validate_api_key_secret(api_key, api_secret, authorization_source)
+		# elif auth_type.lower() == "token":
+		# 	api_key, api_secret = auth_token.split(":")
+		# 	validate_api_key_secret(api_key, api_secret, authorization_source)
+		if auth_type.lower() == "bearer":
+			data = validate_jwt_token(authorization_header[1])
+			api_key, api_secret = data['key'], data['secret']
 			validate_api_key_secret(api_key, api_secret, authorization_source)
-		elif auth_type.lower() == "token":
-			api_key, api_secret = auth_token.split(":")
-			validate_api_key_secret(api_key, api_secret, authorization_source)
+		else:
+			frappe.throw(
+				_("Authorization type must be bearer."),
+				frappe.InvalidAuthorizationToken,
+			)
+
+
 	except binascii.Error:
 		frappe.throw(
 			_("Failed to decode token, please provide a valid base64-encoded token."),
