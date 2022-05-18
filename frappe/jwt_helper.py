@@ -70,7 +70,7 @@ def jwt_encoder(user):
     except Exception as e:
         frappe.log_error(frappe.get_traceback(), "Login error")
         frappe.throw(_(str(e)))
-        
+
 
 def hashed_token(cookie):
     h = blake2b(digest_size=16, key=b'TRINITY2022')
@@ -87,3 +87,12 @@ def verify_hashed(cookie, key):
         frappe.throw(_("Invalid Token"))
 
 
+def user_log(user):    
+    if not frappe.db.exists("User Log", user):
+        frappe.get_doc({
+            "doctype": "User Log",
+            "user": user
+        }).insert()
+        return True
+    else:
+        return False
