@@ -56,9 +56,6 @@ def default(o):
 def jwt_encoder(user):
     try:
         user = frappe.get_value("User", {"name": user}, ['api_key', 'name'], as_dict=1)
-        if user.name == 'Administrator' or user.name == 'administrator' and not user.api_key:
-            user.api_key = 'admin'
-
         if user.api_key:
             now = datetime.datetime.now()
             payload = {

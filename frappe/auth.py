@@ -197,9 +197,10 @@ class LoginManager:
 		if not resume:
 			frappe.response["full_name"] = self.full_name
 
-			from frappe.jwt_helper import jwt_encoder
-			frappe.response["token"] = jwt_encoder(self.user)
-			user_log(self.user) # this will log the user login
+			if frappe.local.request.path == "/api/method/login":
+				from frappe.jwt_helper import jwt_encoder
+				frappe.response["token"] = jwt_encoder(self.user)
+				user_log(self.user) # this will log the user login
 
 
 		# redirect information
