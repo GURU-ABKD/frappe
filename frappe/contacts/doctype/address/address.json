@@ -50,8 +50,7 @@
   {
    "fieldname": "address_line1",
    "fieldtype": "Data",
-   "label": "Address Line 1",
-   "reqd": 1
+   "label": "Address Line 1"
   },
   {
    "fieldname": "address_line2",
@@ -148,7 +147,7 @@
  "icon": "fa fa-map-marker",
  "idx": 5,
  "links": [],
- "modified": "2020-10-21 16:14:37.284830",
+ "modified": "2022-09-20 00:11:38.521094",
  "modified_by": "Administrator",
  "module": "Contacts",
  "name": "Address",
