@@ -13,6 +13,7 @@
   "column_break_4",
   "disabled",
   "is_custom",
+  "is_trinity",
   "desk_access",
   "two_factor_auth",
   "navigation_settings_section",
@@ -142,13 +143,21 @@
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Is Custom"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_trinity",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Is Trinity"
   }
  ],
  "icon": "fa fa-bookmark",
  "idx": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-01-12 20:18:18.496230",
+ "modified": "2022-11-23 18:40:09.866614",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Role",
@@ -162,6 +171,18 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Trinity System Admin",
    "share": 1,
    "write": 1
   }

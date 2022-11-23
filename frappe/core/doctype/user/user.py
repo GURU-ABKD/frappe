@@ -654,6 +654,20 @@ def get_all_roles(arg=None):
 
 	return [role.get("name") for role in roles]
 
+@frappe.whitelist()
+def get_all_trinity_roles(arg=None):
+	"""return all roles"""
+	active_domains = frappe.get_active_domains()
+
+	roles = frappe.get_all(
+		"Role",
+		filters={"name": ("not in", "Administrator,Guest,All"), "disabled": 0, "is_trinity": 1},
+		or_filters={"ifnull(restrict_to_domain, '')": "", "restrict_to_domain": ("in", active_domains)},
+		order_by="name",
+	)
+
+	return [role.get("name") for role in roles]
+
 
 @frappe.whitelist()
 def get_roles(arg=None):
