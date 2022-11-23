@@ -77,7 +77,8 @@
   "route",
   "is_published_field",
   "advanced",
-  "engine"
+  "engine",
+  "amended_from"
  ],
  "fields": [
   {
@@ -547,10 +548,20 @@
   {
    "fieldname": "column_break_51",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "DocType",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
  "icon": "fa fa-bolt",
  "idx": 6,
+ "index_web_pages_for_search": 1,
  "links": [
   {
    "group": "Views",
@@ -628,7 +639,7 @@
    "link_fieldname": "reference_doctype"
   }
  ],
- "modified": "2021-11-01 15:26:19.077164",
+ "modified": "2022-10-17 21:24:16.977993",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "DocType",
@@ -654,6 +665,16 @@
    "role": "Administrator",
    "share": 1,
    "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "select": 1,
+   "share": 1
   }
  ],
  "route": "doctype",

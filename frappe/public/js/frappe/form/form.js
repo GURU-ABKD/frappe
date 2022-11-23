@@ -1664,7 +1664,9 @@ frappe.ui.form.Form = class FrappeForm {
 	}
 
 	scroll_to_field(fieldname) {
+		console.log(fieldname)
 		let field = this.get_field(fieldname);
+		console.log(field)
 		if (!field) return;
 
 		let $el = field.$wrapper;

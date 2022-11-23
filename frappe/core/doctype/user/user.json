@@ -668,7 +668,7 @@
    "link_fieldname": "user"
   }
  ],
- "modified": "2022-03-09 01:47:56.745069",
+ "modified": "2022-08-18 14:27:39.887917",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",
@@ -695,13 +695,11 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "route": "user",
  "search_fields": "full_name",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": [],
  "title_field": "full_name",
  "track_changes": 1
 }

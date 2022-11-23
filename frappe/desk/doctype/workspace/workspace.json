@@ -209,16 +209,16 @@
    "options": "Workspace Link"
   },
   {
-    "default": "0",
-    "depends_on": "extends_another_page",
-    "description": "Sets the current page as default for all users",
-    "fieldname": "is_default",
-    "fieldtype": "Check",
-    "label": "Is Default"
-   }
+   "default": "0",
+   "depends_on": "extends_another_page",
+   "description": "Sets the current page as default for all users",
+   "fieldname": "is_default",
+   "fieldtype": "Check",
+   "label": "Is Default"
+  }
  ],
  "links": [],
- "modified": "2021-01-21 12:09:36.156614",
+ "modified": "2022-10-17 15:53:18.977264",
  "modified_by": "Administrator",
  "module": "Desk",
  "name": "Workspace",
