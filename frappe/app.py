@@ -104,6 +104,7 @@ def application(request):
 		process_response(response)
 		frappe.destroy()
 
+	# response.headers['Access-Control-Allow-Origin'] = '*'
 	return response
 
 
@@ -293,6 +294,7 @@ def handle_exception(e):
 	if return_as_message:
 		response = frappe.website.render.render("message", http_status_code=http_status_code)
 
+	# response.headers['Access-Control-Allow-Origin'] = '*'
 	return response
 
 

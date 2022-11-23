@@ -20,7 +20,7 @@ from frappe.twofactor import (
 from frappe.utils import cint, date_diff, datetime, get_datetime, today
 from frappe.utils.password import check_password
 from frappe.website.utils import get_home_page
-
+from frappe.jwt_helper import user_log
 
 class HTTPRequest:
 	def __init__(self):
@@ -196,6 +196,12 @@ class LoginManager:
 
 		if not resume:
 			frappe.response["full_name"] = self.full_name
+
+			if frappe.local.request.path == "/api/method/login":
+				from frappe.jwt_helper import jwt_encoder
+				frappe.response["token"] = jwt_encoder(self.user)
+				user_log(self.user) # this will log the user login
+
 
 		# redirect information
 		redirect_to = frappe.cache().hget("redirect_after_login", self.user)
