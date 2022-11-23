@@ -50,16 +50,29 @@ def get_roles_and_doctypes():
 
 		restricted_roles.append("All")
 
-	roles = frappe.get_all(
-		"Role",
-		filters={
-			"name": ("not in", restricted_roles),
-			"disabled": 0,
-		},
-		or_filters={"ifnull(restrict_to_domain, '')": "", "restrict_to_domain": ("in", active_domains)},
-		fields=["name"],
-	)
-
+	user_roles = frappe.get_roles(frappe.session.user) 
+	if "Trinity System Admin" in user_roles:
+		roles = frappe.get_all(
+			"Role",
+			filters={
+				"name": ("not in", restricted_roles),
+				"disabled": 0,
+				"is_trinity": 1,
+			},
+			or_filters={"ifnull(restrict_to_domain, '')": "", "restrict_to_domain": ("in", active_domains)},
+			fields=["name"],
+		)
+	else:
+		roles = frappe.get_all(
+			"Role",
+			filters={
+				"name": ("not in", restricted_roles),
+				"disabled": 0,
+			},
+			or_filters={"ifnull(restrict_to_domain, '')": "", "restrict_to_domain": ("in", active_domains)},
+			fields=["name"],
+		)
+		
 	doctypes_list = [{"label": _(d.get("name")), "value": d.get("name")} for d in doctypes]
 	roles_list = [{"label": _(d.get("name")), "value": d.get("name")} for d in roles]
 

@@ -4,31 +4,63 @@ frappe.RoleEditor = class {
 		this.wrapper = wrapper;
 		this.disable = disable;
 		let user_roles = this.frm.doc.roles.map(a => a.role);
-		this.multicheck = frappe.ui.form.make_control({
-			parent: wrapper,
-			df: {
-				fieldname: "roles",
-				fieldtype: "MultiCheck",
-				select_all: true,
-				columns: 3,
-				get_data: () => {
-					return frappe.xcall('frappe.core.doctype.user.user.get_all_roles').then(roles => {
-						return roles.map(role => {
-							return {
-								label: __(role),
-								value: role,
-								checked: user_roles.includes(role)
-							};
+		if (has_common(frappe.user_roles, ["Trinity System Admin"])) {
+			this.multicheck = frappe.ui.form.make_control({
+				parent: wrapper,
+				df: {
+					fieldname: "roles",
+					fieldtype: "MultiCheck",
+					select_all: true,
+					columns: 3,
+					get_data: () => {
+						return frappe.xcall('frappe.core.doctype.user.user.get_all_trinity_roles').then(roles => {
+							return roles.map(role => {
+								return {
+									label: __(role),
+									value: role,
+									checked: user_roles.includes(role)
+								};
+							});
 						});
-					});
+					},
+					on_change: () => {
+						this.set_roles_in_table();
+						this.frm.dirty();
+					}
 				},
-				on_change: () => {
-					this.set_roles_in_table();
-					this.frm.dirty();
-				}
-			},
-			render_input: true
-		});
+				render_input: true
+			});
+		} else {
+			this.multicheck = frappe.ui.form.make_control({
+				parent: wrapper,
+				df: {
+					fieldname: "roles",
+					fieldtype: "MultiCheck",
+					select_all: true,
+					columns: 3,
+					get_data: () => {
+						return frappe.xcall('frappe.core.doctype.user.user.get_all_roles').then(roles => {
+							return roles.map(role => {
+								return {
+									label: __(role),
+									value: role,
+									checked: user_roles.includes(role)
+								};
+							});
+						});
+					},
+					on_change: () => {
+						this.set_roles_in_table();
+						this.frm.dirty();
+					}
+				},
+				render_input: true
+			});
+		}
+
+		
+	
+		
 
 		let original_func = this.multicheck.make_checkboxes;
 		this.multicheck.make_checkboxes = () => {
@@ -43,6 +75,7 @@ frappe.RoleEditor = class {
 	set_enable_disable() {
 		$(this.wrapper).find('input[type="checkbox"]').attr('disabled', this.disable ? true : false);
 	}
+
 	show_permissions(role) {
 		// show permissions for a role
 		if (!this.perm_dialog) {
