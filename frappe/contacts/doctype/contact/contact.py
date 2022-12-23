@@ -174,6 +174,8 @@ def invite_user(contact):
 				"email": contact.email_id,
 				"user_type": "Website User",
 				"send_welcome_email": 1,
+				"role_profile_name": "Trinity Client",
+				"module_profile": "Trinity Client"
 			}
 		).insert(ignore_permissions=True)
 
