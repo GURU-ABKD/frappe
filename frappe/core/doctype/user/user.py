@@ -261,9 +261,11 @@ class User(Document):
 
 					if not self.flags.no_welcome_mail and cint(self.send_welcome_email):
 						self.send_welcome_mail_to_user()
-						self.flags.email_sent = 1
 						if frappe.session.user != "Guest":
-							msgprint(_("Welcome email sent"))
+							if (self.flags.email_sent == 0):
+								msgprint(_("Welcome email sent"))
+						
+						self.flags.email_sent = 1
 						return
 			else:
 				self.email_new_password(new_password)
